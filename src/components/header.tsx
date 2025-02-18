@@ -5,8 +5,8 @@ import { motion } from "framer-motion";
 
 export default function Header() {
   return (
-    <header className="border-b border-border bg-background">
-      <div className="container mx-auto flex items-center px-4 py-6">
+    <header className="bg-background">
+      <div className="container mx-auto flex items-center justify-center px-4 py-6">
         <motion.div
           initial={{ rotate: -90 }}
           animate={{ rotate: 0 }}

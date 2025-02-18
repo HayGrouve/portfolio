@@ -21,7 +21,7 @@ export default function ProjectCard({
   link,
 }: ProjectCardProps) {
   return (
-    <Card className="group flex h-full flex-col overflow-hidden border border-accent/20 bg-card text-card-foreground">
+    <Card className="group flex h-full flex-col overflow-hidden border border-accent/20 bg-card text-card-foreground shadow-sm transition-shadow duration-300 hover:shadow-accent">
       <CardHeader>
         <CardTitle className="text-xl font-bold text-accent">{title}</CardTitle>
         <CardDescription className="mt-2">{description}</CardDescription>

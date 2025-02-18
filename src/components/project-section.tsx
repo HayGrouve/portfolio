@@ -25,7 +25,9 @@ export default function ProjectSection({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <h2 className="mb-6 text-2xl font-bold text-accent">{title}</h2>
+      <h2 className="relative z-10 mb-6 text-2xl font-bold text-accent">
+        {title}
+      </h2>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {projects.map((project, index) => (
           <ProjectCard key={index} {...project} />

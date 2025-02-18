@@ -20,7 +20,7 @@ export default function Header() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          My Project Portfolio
+          Tseko&apos;s Projects
         </motion.h1>
       </div>
     </header>

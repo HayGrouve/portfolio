@@ -23,10 +23,16 @@ export default function ProjectCard({
   return (
     <Card className="group flex h-full flex-col overflow-hidden border border-accent/20 bg-card text-card-foreground shadow-sm transition-shadow duration-300 hover:shadow-accent">
       <CardHeader>
-        <CardTitle className="text-xl font-bold text-accent">{title}</CardTitle>
-        <CardDescription className="mt-2">{description}</CardDescription>
+        <CardTitle className="select-none text-xl font-bold text-accent">
+          {title}
+        </CardTitle>
+        <CardDescription
+          title={description.length > 58 ? description : undefined}
+          className="mt-2 select-none truncate"
+        >
+          {description}
+        </CardDescription>
       </CardHeader>
-      <CardContent className="flex-grow" />
       <CardFooter>
         <Button
           asChild

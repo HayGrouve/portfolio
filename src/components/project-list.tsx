@@ -16,7 +16,7 @@ const projects = [
   {
     title: "E-commerce Platform",
     description:
-      "A full-stack e-commerce solution built with Next.js and Stripe",
+      "A full-stack e-commerce solution built with Stripe A full-stack e-commerce solution built with Stripe A full-stack e-commerce solution built with Stripe",
     link: "https://github.com/yourusername/ecommerce-platform",
     type: "client",
   },
@@ -34,7 +34,7 @@ const projects = [
   },
   {
     title: "Task Manager",
-    description: "A productivity app for managing daily tasks and projects",
+    description: "A productivity app for managing daily tasks and projectsss",
     link: "https://github.com/yourusername/task-manager",
     type: "client",
   },

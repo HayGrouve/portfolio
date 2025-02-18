@@ -1,29 +1,44 @@
-# Create T3 App
+# Portfolio Website
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+This is a personal portfolio website built with **Next.js** to showcase a collection of my projects, both personal and for my clients. The website provides short information and links to various projects I have worked on.
 
-## What's next? How do I make an app with this?
+## 🛠️ Tech Stack
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+- **Framework**: Next.js
+- **Styling**: Tailwind CSS
+- **Deployment**: Vercel
+- **File Storage**: UploadThing
+- **Validation**: Zod
+- **Forms**: React Hook Form
+- **API Requests**: TanStack Query
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+## 🚀 Getting Started
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+### Prerequisites
 
-## Learn More
+- Node.js (v16+ recommended)
+- npm or yarn installed
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+### Installation
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+```bash
+git clone https://github.com/haygrouve/portfolio.git
+cd portfolio
+npm install  # or yarn install
+```
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+### Running Locally
 
-## How do I deploy this?
+```bash
+npm run dev  # or yarn dev
+```
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## 📜 License
+
+This project is personal and not intended for public use.
+
+---
+
+💡 **Follow me on [GitHub](https://github.com/haygrouve) and [LinkedIn](https://www.linkedin.com/in/tsvetomir-tsekov-a9317b1b3/) for updates!** 🚀

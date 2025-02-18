@@ -9,6 +9,16 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "My Project Portfolio",
   description: "A collection of my projects",
+  openGraph: {
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 800,
+        height: 600,
+        alt: "My Project Portfolio",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({

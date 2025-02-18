@@ -10,11 +10,13 @@ export const metadata: Metadata = {
   title: "My Project Portfolio",
   description: "A collection of my projects",
   openGraph: {
+    type: "website",
+    url: "https://portfolio-sigma-eight-91.vercel.app/",
     images: [
       {
-        url: "/og-image.jpg",
-        width: 800,
-        height: 600,
+        url: "https://portfolio-sigma-eight-91.vercel.app/og-image.jpg",
+        width: 1200,
+        height: 630,
         alt: "My Project Portfolio",
       },
     ],

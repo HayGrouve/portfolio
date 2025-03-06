@@ -2,9 +2,9 @@ import ProjectSection from "./project-section";
 
 const projects = [
   {
-    title: "Personal Blog",
-    description: "A blog built with Next.js and MDX",
-    link: "https://github.com/yourusername/personal-blog",
+    title: "Cooking Book",
+    description: "This is my Cooking Book",
+    link: "https://recipes-ofqemhjkv-haygrouves-projects.vercel.app",
     type: "personal",
   },
   {

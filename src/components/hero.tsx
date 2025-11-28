@@ -87,12 +87,12 @@ export default function Hero() {
       {/* Animated background orbs */}
       <div className="pointer-events-none absolute inset-0 z-[15] overflow-visible">
         <motion.div
-          className="absolute h-96 w-96 rounded-full bg-primary/20 blur-3xl"
+          className="absolute h-48 w-48 rounded-full bg-primary/20 blur-3xl md:h-96 md:w-96"
           style={{ left: "10%", top: "10%" }}
           initial={{ x: 0, y: 0, scale: 1 }}
           animate={{
-            x: [0, 150, 80, 200, 50, 0],
-            y: [0, 100, 200, 150, 80, 0],
+            x: [0, 75, 40, 100, 25, 0],
+            y: [0, 50, 100, 75, 40, 0],
             scale: [1, 1.3, 1.1, 1.2, 1.15, 1],
           }}
           transition={{
@@ -103,12 +103,12 @@ export default function Hero() {
           }}
         />
         <motion.div
-          className="absolute h-80 w-80 rounded-full bg-primary/20 blur-3xl"
+          className="absolute h-40 w-40 rounded-full bg-primary/20 blur-3xl md:h-80 md:w-80"
           style={{ right: "5%", top: "70%" }}
           initial={{ x: 0, y: 0, scale: 1 }}
           animate={{
-            x: [0, -120, -200, -80, -150, 0],
-            y: [0, -80, -150, -200, -100, 0],
+            x: [0, -60, -100, -40, -75, 0],
+            y: [0, -40, -75, -100, -50, 0],
             scale: [1, 1.2, 1.05, 1.15, 1.1, 1],
           }}
           transition={{
@@ -120,12 +120,12 @@ export default function Hero() {
           }}
         />
         <motion.div
-          className="absolute h-72 w-72 rounded-full bg-primary/20 blur-3xl"
+          className="absolute hidden h-36 w-36 rounded-full bg-primary/20 blur-3xl md:block md:h-72 md:w-72"
           style={{ left: "70%", top: "20%" }}
           initial={{ x: 0, y: 0, scale: 1 }}
           animate={{
-            x: [0, 100, 180, 60, 150, 0],
-            y: [0, -60, -120, -180, -90, 0],
+            x: [0, 50, 90, 30, 75, 0],
+            y: [0, -30, -60, -90, -45, 0],
             scale: [1, 1.25, 1.05, 1.2, 1.1, 1],
           }}
           transition={{
@@ -163,15 +163,15 @@ export default function Hero() {
           transition={{ duration: 0.5 }}
           className="max-w-3xl space-y-6"
         >
-          <h2 className="text-xl font-medium text-primary">
+          <h2 className="text-xl font-medium text-primary drop-shadow-lg">
             Hi, I&apos;m {profile.name}
           </h2>
-          <h1 className="text-5xl font-bold leading-tight tracking-tighter sm:text-7xl">
+          <h1 className="text-5xl font-bold leading-tight tracking-tighter drop-shadow-xl sm:text-7xl">
             {profile.role}
             <br />
             <span className="text-muted-foreground">building for the web.</span>
           </h1>
-          <p className="max-w-2xl text-xl text-muted-foreground">
+          <p className="max-w-2xl text-xl text-muted-foreground drop-shadow-md">
             {profile.bio}
           </p>
 

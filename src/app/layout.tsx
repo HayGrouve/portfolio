@@ -5,13 +5,73 @@ import "@/styles/globals.css";
 import BackgroundAnimation from "../components/background-animation";
 import { ThemeProvider } from "@/components/theme-provider";
 import { jsonLd } from "@/lib/json-ld";
+import { profile } from "@/lib/data";
 
 const inter = Inter({ subsets: ["latin"] });
 
+const siteUrl = "https://www.tseko.site/";
+const siteName = "Tsvetomir Tsekov - Portfolio";
+
 export const metadata: Metadata = {
-  title: "Tsvetomir | Senior Full Stack Developer",
-  description:
-    "Portfolio of Tsvetomir, a Senior Full Stack Developer specializing in React, Next.js, and Cloud Architecture.",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: `${profile.name} | ${profile.role}`,
+    template: `%s | ${profile.name}`,
+  },
+  description: profile.bio,
+  keywords: [
+    "Full Stack Developer",
+    "React",
+    "Next.js",
+    "TypeScript",
+    "Node.js",
+    "Web Development",
+    "Frontend Developer",
+    "Backend Developer",
+    "Portfolio",
+    "Tsvetomir Tsekov",
+  ],
+  authors: [{ name: profile.name, url: siteUrl }],
+  creator: profile.name,
+  publisher: profile.name,
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: siteUrl,
+    siteName: siteName,
+    title: `${profile.name} | ${profile.role}`,
+    description: profile.bio,
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: `${profile.name} - ${profile.role}`,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${profile.name} | ${profile.role}`,
+    description: profile.bio,
+    images: ["/og-image.jpg"],
+    creator: profile.socials.linkedin,
+  },
+  alternates: {
+    canonical: siteUrl,
+  },
+  category: "Portfolio",
 };
 
 export default function RootLayout({

@@ -59,7 +59,9 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             <p className="text-sm text-muted-foreground">{project.solution}</p>
           </div>
         )}
-        <div className="flex flex-wrap gap-2 pt-2">
+      </CardContent>
+      <CardFooter className="flex flex-col gap-4 pt-4">
+        <div className="flex w-full flex-wrap justify-center gap-2">
           {project.technologies.map((tech) => (
             <span
               key={tech}
@@ -69,26 +71,26 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             </span>
           ))}
         </div>
-      </CardContent>
-      <CardFooter className="gap-2 pt-4">
-        {project.link && (
-          <Button asChild variant="default" className="flex-1" size="sm">
-            <Link href={project.link} target="_blank" rel="noopener noreferrer">
-              Demo <ExternalLink className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
-        )}
-        {project.github && (
-          <Button asChild variant="outline" className="flex-1" size="sm">
-            <Link
-              href={project.github}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Code <Github className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
-        )}
+        <div className="flex w-full gap-2">
+          {project.link && (
+            <Button asChild variant="default" className="flex-1" size="sm">
+              <Link href={project.link} target="_blank" rel="noopener noreferrer">
+                Demo <ExternalLink className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          )}
+          {project.github && (
+            <Button asChild variant="outline" className="flex-1" size="sm">
+              <Link
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Code <Github className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          )}
+        </div>
       </CardFooter>
     </Card>
   );

@@ -1,22 +1,171 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useSpring } from "framer-motion";
 import { ArrowRight, Github, Linkedin, Mail } from "lucide-react";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { profile } from "@/lib/data";
+import { useState, useRef, useEffect } from "react";
 
 export default function Hero() {
+  const [isHovering, setIsHovering] = useState(false);
+  const [showCursorGlow, setShowCursorGlow] = useState(true);
+  const sectionRef = useRef<HTMLElement>(null);
+  const hideTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Smooth spring animation for cursor following
+  const cursorX = useSpring(0, { stiffness: 150, damping: 15 });
+  const cursorY = useSpring(0, { stiffness: 150, damping: 15 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (sectionRef.current) {
+        const rect = sectionRef.current.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        cursorX.set(x);
+        cursorY.set(y);
+
+        // Show cursor glow and reset hide timeout
+        setShowCursorGlow(true);
+
+        // Clear existing timeout
+        if (hideTimeoutRef.current) {
+          clearTimeout(hideTimeoutRef.current);
+        }
+
+        // Set new timeout to hide after 3 seconds
+        hideTimeoutRef.current = setTimeout(() => {
+          setShowCursorGlow(false);
+        }, 3000);
+      }
+    };
+
+    const handleMouseEnter = () => {
+      setIsHovering(true);
+      setShowCursorGlow(true);
+      // Clear any existing timeout when entering
+      if (hideTimeoutRef.current) {
+        clearTimeout(hideTimeoutRef.current);
+      }
+    };
+
+    const handleMouseLeave = () => {
+      setIsHovering(false);
+      setShowCursorGlow(false);
+      // Clear timeout when leaving
+      if (hideTimeoutRef.current) {
+        clearTimeout(hideTimeoutRef.current);
+      }
+    };
+
+    const section = sectionRef.current;
+    if (section) {
+      section.addEventListener("mousemove", handleMouseMove);
+      section.addEventListener("mouseenter", handleMouseEnter);
+      section.addEventListener("mouseleave", handleMouseLeave);
+    }
+
+    return () => {
+      if (section) {
+        section.removeEventListener("mousemove", handleMouseMove);
+        section.removeEventListener("mouseenter", handleMouseEnter);
+        section.removeEventListener("mouseleave", handleMouseLeave);
+      }
+      // Clear timeout on cleanup
+      if (hideTimeoutRef.current) {
+        clearTimeout(hideTimeoutRef.current);
+      }
+    };
+  }, [cursorX, cursorY]);
+
   return (
-    <section className="flex min-h-[80vh] flex-col justify-center py-20">
-      <div className="container mx-auto px-4">
+    <section
+      ref={sectionRef}
+      className="relative flex min-h-[80vh] flex-col justify-center overflow-hidden py-20"
+    >
+      {/* Animated background orbs */}
+      <div className="pointer-events-none absolute inset-0 z-[15] overflow-visible">
+        <motion.div
+          className="absolute h-96 w-96 rounded-full bg-primary/20 blur-3xl"
+          style={{ left: "10%", top: "10%" }}
+          initial={{ x: 0, y: 0, scale: 1 }}
+          animate={{
+            x: [0, 150, 80, 200, 50, 0],
+            y: [0, 100, 200, 150, 80, 0],
+            scale: [1, 1.3, 1.1, 1.2, 1.15, 1],
+          }}
+          transition={{
+            duration: 12,
+            repeat: Infinity,
+            repeatType: "loop",
+            ease: "easeInOut",
+          }}
+        />
+        <motion.div
+          className="absolute h-80 w-80 rounded-full bg-primary/20 blur-3xl"
+          style={{ right: "5%", top: "70%" }}
+          initial={{ x: 0, y: 0, scale: 1 }}
+          animate={{
+            x: [0, -120, -200, -80, -150, 0],
+            y: [0, -80, -150, -200, -100, 0],
+            scale: [1, 1.2, 1.05, 1.15, 1.1, 1],
+          }}
+          transition={{
+            duration: 14,
+            repeat: Infinity,
+            repeatType: "loop",
+            ease: "easeInOut",
+            delay: 0.5,
+          }}
+        />
+        <motion.div
+          className="absolute h-72 w-72 rounded-full bg-primary/20 blur-3xl"
+          style={{ left: "70%", top: "20%" }}
+          initial={{ x: 0, y: 0, scale: 1 }}
+          animate={{
+            x: [0, 100, 180, 60, 150, 0],
+            y: [0, -60, -120, -180, -90, 0],
+            scale: [1, 1.25, 1.05, 1.2, 1.1, 1],
+          }}
+          transition={{
+            duration: 16,
+            repeat: Infinity,
+            repeatType: "loop",
+            ease: "easeInOut",
+            delay: 1,
+          }}
+        />
+
+        {/* Mouse-following cursor glow */}
+        {isHovering && (
+          <motion.div
+            className="absolute h-40 w-40 rounded-full bg-primary/20 blur-3xl"
+            style={{
+              x: cursorX,
+              y: cursorY,
+              left: -80, // Half of width (160/2) to center it on cursor
+              top: -80, // Half of height (160/2) to center it on cursor
+            }}
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{
+              opacity: showCursorGlow ? 1 : 0,
+              scale: showCursorGlow ? 1 : 0,
+            }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+          />
+        )}
+      </div>
+      <div className="container relative z-20 mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           className="max-w-3xl space-y-6"
         >
-          <h2 className="text-xl font-medium text-primary">Hi, I&apos;m {profile.name}</h2>
+          <h2 className="text-xl font-medium text-primary">
+            Hi, I&apos;m {profile.name}
+          </h2>
           <h1 className="text-5xl font-bold leading-tight tracking-tighter sm:text-7xl">
             {profile.role}
             <br />
@@ -58,4 +207,3 @@ export default function Hero() {
     </section>
   );
 }
-

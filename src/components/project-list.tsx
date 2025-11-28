@@ -14,8 +14,10 @@ export default function ProjectList() {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <h2 className="mb-12 text-3xl font-bold tracking-tighter sm:text-4xl">Featured Projects</h2>
-          
+          <h2 className="mb-12 text-3xl font-bold tracking-tighter sm:text-4xl">
+            Featured Projects
+          </h2>
+
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {projects.map((project, index) => (
               <motion.div

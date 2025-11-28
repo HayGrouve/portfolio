@@ -3,34 +3,40 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "@/styles/globals.css";
 import BackgroundAnimation from "../components/background-animation";
+import { ThemeProvider } from "@/components/theme-provider";
+import { jsonLd } from "@/lib/json-ld";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "My Project Portfolio",
-  description: "A collection of my projects",
-  openGraph: {
-    type: "website",
-    url: "https://portfolio-sigma-eight-91.vercel.app/",
-    images: [
-      {
-        url: "https://portfolio-sigma-eight-91.vercel.app/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "My Project Portfolio",
-      },
-    ],
-  },
+  title: "Tsvetomir | Senior Full Stack Developer",
+  description:
+    "Portfolio of Tsvetomir, a Senior Full Stack Developer specializing in React, Next.js, and Cloud Architecture.",
 };
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className="dark">
-      <body className={`${inter.className} relative z-10`}>
-        <BackgroundAnimation />
-        {children}
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
+      <body
+        className={`${inter.className} relative z-10 min-h-screen bg-background font-sans antialiased`}
+      >
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <BackgroundAnimation />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

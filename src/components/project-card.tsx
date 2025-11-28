@@ -7,42 +7,88 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ExternalLink } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { ExternalLink, Github } from "lucide-react";
+import Link from "next/link";
+import Image from "next/image";
+import { Project } from "@/lib/data";
 
 interface ProjectCardProps {
-  title: string;
-  description: string;
-  link: string;
+  project: Project;
 }
 
-export default function ProjectCard({
-  title,
-  description,
-  link,
-}: ProjectCardProps) {
+export default function ProjectCard({ project }: ProjectCardProps) {
   return (
-    <Card className="group flex h-full flex-col overflow-hidden border border-accent/20 bg-card text-card-foreground shadow-sm transition-shadow duration-300 hover:shadow-accent">
+    <Card className="flex h-full flex-col overflow-hidden transition-all hover:shadow-lg">
+      <div className="relative h-48 w-full overflow-hidden">
+        {project.image ? (
+          <Image
+            src={project.image}
+            alt={project.title}
+            fill
+            className="object-cover transition-transform duration-300 hover:scale-105"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center bg-muted text-muted-foreground">
+            No Image
+          </div>
+        )}
+      </div>
       <CardHeader>
-        <CardTitle className="select-none text-xl font-bold text-accent">
-          {title}
-        </CardTitle>
-        <CardDescription
-          title={description.length > 58 ? description : undefined}
-          className="mt-2 select-none truncate"
-        >
-          {description}
+        <div className="flex items-start justify-between gap-4">
+          <CardTitle className="text-xl font-bold">{project.title}</CardTitle>
+          <Badge variant={project.type === "work" ? "default" : "secondary"}>
+            {project.type}
+          </Badge>
+        </div>
+        <CardDescription className="text-base">
+          {project.description}
         </CardDescription>
       </CardHeader>
-      <CardFooter>
-        <Button
-          asChild
-          variant="outline"
-          className="w-full transition-colors duration-300 hover:bg-accent hover:text-accent-foreground"
-        >
-          <a href={link} target="_blank" rel="noopener noreferrer">
-            View Project <ExternalLink className="ml-2 h-4 w-4" />
-          </a>
-        </Button>
+      <CardContent className="flex-1 space-y-4">
+        {project.challenge && (
+          <div>
+            <h4 className="mb-1 text-sm font-semibold">Challenge</h4>
+            <p className="text-sm text-muted-foreground">{project.challenge}</p>
+          </div>
+        )}
+        {project.solution && (
+          <div>
+            <h4 className="mb-1 text-sm font-semibold">Solution</h4>
+            <p className="text-sm text-muted-foreground">{project.solution}</p>
+          </div>
+        )}
+        <div className="flex flex-wrap gap-2 pt-2">
+          {project.technologies.map((tech) => (
+            <span
+              key={tech}
+              className="inline-flex items-center rounded-md border px-2 py-1 text-xs font-medium text-muted-foreground"
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+      </CardContent>
+      <CardFooter className="gap-2 pt-4">
+        {project.link && (
+          <Button asChild variant="default" className="flex-1" size="sm">
+            <Link href={project.link} target="_blank" rel="noopener noreferrer">
+              Demo <ExternalLink className="ml-2 h-4 w-4" />
+            </Link>
+          </Button>
+        )}
+        {project.github && (
+          <Button asChild variant="outline" className="flex-1" size="sm">
+            <Link
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Code <Github className="ml-2 h-4 w-4" />
+            </Link>
+          </Button>
+        )}
       </CardFooter>
     </Card>
   );

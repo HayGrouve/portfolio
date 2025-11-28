@@ -24,7 +24,7 @@ const Triangle = ({
         height: 0,
         borderLeft: `${size / 2}px solid transparent`,
         borderRight: `${size / 2}px solid transparent`,
-        borderBottom: `${size}px solid white`,
+        borderBottom: `${size}px solid hsl(var(--primary) / 0.1)`,
       }}
       initial={{ y: "100vh", opacity: 0, rotate: 0 }}
       animate={{

@@ -11,7 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { ExternalLink, Github } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { Project } from "@/lib/data";
+import type { Project } from "@/lib/data";
 
 interface ProjectCardProps {
   project: Project;

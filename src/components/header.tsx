@@ -1,9 +1,10 @@
 "use client";
 
-import { GalleryVerticalEnd, Menu } from "lucide-react";
+import { Menu } from "lucide-react";
 import { motion } from "framer-motion";
 import { ModeToggle } from "./theme-toggle";
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "./ui/button";
 import {
   Sheet,
@@ -30,11 +31,17 @@ export default function Header() {
       <div className="container mx-auto flex h-14 items-center justify-between px-4">
         <Link href="/" className="flex items-center gap-2">
           <motion.div
-            initial={{ rotate: -90 }}
-            animate={{ rotate: 0 }}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
           >
-            <GalleryVerticalEnd className="h-6 w-6 text-primary" />
+            <Image
+              src="/logo.png"
+              alt="Logo"
+              width={32}
+              height={32}
+              className="h-8 w-8 object-contain"
+            />
           </motion.div>
           <motion.span
             className="text-lg font-bold"
@@ -42,7 +49,7 @@ export default function Header() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            Home
+            Tseko
           </motion.span>
         </Link>
 

@@ -46,7 +46,7 @@ export const profile = {
 export const skills: SkillCategory[] = [
   {
     category: "Frontend",
-    skills: ["React", "Next.js", "TailwindCSS", "TypeScript", "ShadCN/ui"],
+    skills: ["Next.js", "TailwindCSS", "TypeScript", "ShadCN/ui", "RTL"],
   },
   {
     category: "Backend",

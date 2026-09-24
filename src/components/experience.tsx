@@ -10,7 +10,7 @@ export default function Experience() {
           index="02"
           label="Experience"
           title="Where I've worked"
-          description="Product teams across document automation, fintech and education."
+          description="Product teams across web platforms, AI document processing, fintech and education."
         />
 
         <ol className="border-t">
@@ -31,20 +31,26 @@ export default function Experience() {
                       {job.company}
                     </h3>
                     <p className="mt-1 text-muted-foreground">{job.role}</p>
-                    <p className="mt-4 max-w-2xl leading-relaxed">
-                      {job.description}
-                    </p>
-                    <ul className="mt-5 space-y-2.5">
-                      {job.achievements.map((achievement) => (
-                        <li
-                          key={achievement}
-                          className="flex gap-3 text-muted-foreground"
-                        >
-                          <span className="mt-2.5 h-1 w-3 shrink-0 rounded-full bg-brand/70" />
-                          <span className="leading-relaxed">{achievement}</span>
-                        </li>
-                      ))}
-                    </ul>
+                    {job.description && (
+                      <p className="mt-4 max-w-2xl leading-relaxed">
+                        {job.description}
+                      </p>
+                    )}
+                    {job.achievements && job.achievements.length > 0 && (
+                      <ul className="mt-5 space-y-2.5">
+                        {job.achievements.map((achievement) => (
+                          <li
+                            key={achievement}
+                            className="flex gap-3 text-muted-foreground"
+                          >
+                            <span className="mt-2.5 h-1 w-3 shrink-0 rounded-full bg-brand/70" />
+                            <span className="leading-relaxed">
+                              {achievement}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </div>
                 </Reveal>
               </li>

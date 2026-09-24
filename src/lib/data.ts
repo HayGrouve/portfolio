@@ -14,8 +14,8 @@ export interface Experience {
   company: string;
   role: string;
   period: string;
-  description: string;
-  achievements: string[];
+  description?: string;
+  achievements?: string[];
 }
 
 export interface SkillCategory {
@@ -71,11 +71,16 @@ export const skills: SkillCategory[] = [
 
 export const experience: Experience[] = [
   {
+    company: "ZETTAHOST.bg",
+    role: "Web Developer",
+    period: "Feb 2026 - Present",
+  },
+  {
     company: "ScaleHub",
     role: "Frontend Web Developer",
-    period: "Mar 2023 - Present",
+    period: "Mar 2023 - Dec 2025",
     description:
-      "Developing a web portal for digitizing documents and utilizing crowd workers.",
+      "Built and maintained React.js components and UI flows for AI-powered document and image recognition.",
     achievements: [
       "Assisted in developing one of the most critical components of the project.",
       "Introduced and standardized modern web development patterns within the team.",

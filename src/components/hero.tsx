@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, Github, Linkedin, Mail } from "lucide-react";
@@ -15,24 +14,6 @@ function fadeUp(delay: number) {
     animate: { opacity: 1, y: 0 },
     transition: { duration: 0.7, delay, ease },
   };
-}
-
-function LocalTime() {
-  const [time, setTime] = useState<string | null>(null);
-
-  useEffect(() => {
-    const format = () =>
-      new Intl.DateTimeFormat("en-GB", {
-        hour: "2-digit",
-        minute: "2-digit",
-        timeZone: "Europe/Sofia",
-      }).format(new Date());
-    setTime(format());
-    const id = setInterval(() => setTime(format()), 30_000);
-    return () => clearInterval(id);
-  }, []);
-
-  return <span className="tabular-nums">{time ?? "--:--"}</span>;
 }
 
 const stats = [
@@ -63,21 +44,8 @@ export default function Hero() {
       </div>
 
       <div className="container">
-        <motion.div
-          {...fadeUp(0)}
-          className="mb-8 inline-flex items-center gap-2.5 rounded-full border bg-background/60 py-1.5 pl-2 pr-4 text-sm text-muted-foreground backdrop-blur"
-        >
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand opacity-60 motion-reduce:animate-none" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-brand" />
-          </span>
-          <span>{profile.location}</span>
-          <span className="h-3 w-px bg-border" />
-          <LocalTime />
-        </motion.div>
-
         <motion.p
-          {...fadeUp(0.08)}
+          {...fadeUp(0)}
           className="mb-4 font-mono text-sm text-muted-foreground"
         >
           {profile.name} — {profile.role}

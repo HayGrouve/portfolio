@@ -74,6 +74,10 @@ export const experience: Experience[] = [
     company: "ZETTAHOST.bg",
     role: "Web Developer",
     period: "Feb 2026 - Present",
+    description: "Building and maintaining online banking solutions.",
+    achievements: [
+      "Help the team adopt new AI-assisted development workflows.",
+    ],
   },
   {
     company: "ScaleHub",

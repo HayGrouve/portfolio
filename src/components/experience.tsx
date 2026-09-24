@@ -10,7 +10,7 @@ export default function Experience() {
           index="02"
           label="Experience"
           title="Where I've worked"
-          description="Product teams across web platforms, AI document processing, fintech and education."
+          description="Product teams across online banking, AI document processing, fintech and education."
         />
 
         <ol className="border-t">

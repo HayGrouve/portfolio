@@ -15,7 +15,6 @@ export default function Experience() {
 
         <ol className="border-t">
           {experience.map((job, index) => {
-            const current = job.period.includes("Present");
             return (
               <li key={job.company} className="border-b">
                 <Reveal
@@ -26,12 +25,6 @@ export default function Experience() {
                     <p className="font-mono text-sm text-muted-foreground">
                       {job.period}
                     </p>
-                    {current && (
-                      <span className="mt-3 inline-flex items-center gap-2 rounded-full border border-brand/30 bg-brand/10 px-2.5 py-0.5 text-xs font-medium text-brand">
-                        <span className="h-1.5 w-1.5 rounded-full bg-brand" />
-                        Current
-                      </span>
-                    )}
                   </div>
                   <div className="md:col-span-9">
                     <h3 className="text-2xl font-semibold tracking-tight">

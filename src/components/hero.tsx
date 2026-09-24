@@ -1,209 +1,179 @@
 "use client";
 
-import { motion, useSpring } from "framer-motion";
-import { ArrowRight, Github, Linkedin, Mail } from "lucide-react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import { motion } from "framer-motion";
+import { ArrowRight, Github, Linkedin, Mail } from "lucide-react";
 import { Button } from "./ui/button";
-import { profile } from "@/lib/data";
-import { useState, useRef, useEffect } from "react";
+import { experience, profile, skills } from "@/lib/data";
 
-export default function Hero() {
-  const [isHovering, setIsHovering] = useState(false);
-  const [showCursorGlow, setShowCursorGlow] = useState(true);
-  const sectionRef = useRef<HTMLElement>(null);
-  const hideTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+const ease = [0.21, 0.47, 0.32, 0.98] as const;
 
-  // Smooth spring animation for cursor following
-  const cursorX = useSpring(0, { stiffness: 150, damping: 15 });
-  const cursorY = useSpring(0, { stiffness: 150, damping: 15 });
+function fadeUp(delay: number) {
+  return {
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.7, delay, ease },
+  };
+}
+
+function LocalTime() {
+  const [time, setTime] = useState<string | null>(null);
 
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (sectionRef.current) {
-        const rect = sectionRef.current.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        cursorX.set(x);
-        cursorY.set(y);
+    const format = () =>
+      new Intl.DateTimeFormat("en-GB", {
+        hour: "2-digit",
+        minute: "2-digit",
+        timeZone: "Europe/Sofia",
+      }).format(new Date());
+    setTime(format());
+    const id = setInterval(() => setTime(format()), 30_000);
+    return () => clearInterval(id);
+  }, []);
 
-        // Show cursor glow and reset hide timeout
-        setShowCursorGlow(true);
+  return <span className="tabular-nums">{time ?? "--:--"}</span>;
+}
 
-        // Clear existing timeout
-        if (hideTimeoutRef.current) {
-          clearTimeout(hideTimeoutRef.current);
-        }
+const stats = [
+  { value: "7+", label: "Years building for the web" },
+  { value: String(experience.length), label: "Product companies" },
+  { value: "React", label: "Next.js · TypeScript · Node" },
+];
 
-        // Set new timeout to hide after 3 seconds
-        hideTimeoutRef.current = setTimeout(() => {
-          setShowCursorGlow(false);
-        }, 3000);
-      }
-    };
+const socials = [
+  { href: profile.socials.github, label: "GitHub", icon: Github },
+  { href: profile.socials.linkedin, label: "LinkedIn", icon: Linkedin },
+  { href: `mailto:${profile.email}`, label: "Email", icon: Mail },
+];
 
-    const handleMouseEnter = () => {
-      setIsHovering(true);
-      setShowCursorGlow(true);
-      // Clear any existing timeout when entering
-      if (hideTimeoutRef.current) {
-        clearTimeout(hideTimeoutRef.current);
-      }
-    };
+const allSkills = skills.flatMap((group) => group.skills);
 
-    const handleMouseLeave = () => {
-      setIsHovering(false);
-      setShowCursorGlow(false);
-      // Clear timeout when leaving
-      if (hideTimeoutRef.current) {
-        clearTimeout(hideTimeoutRef.current);
-      }
-    };
-
-    const section = sectionRef.current;
-    if (section) {
-      section.addEventListener("mousemove", handleMouseMove);
-      section.addEventListener("mouseenter", handleMouseEnter);
-      section.addEventListener("mouseleave", handleMouseLeave);
-    }
-
-    return () => {
-      if (section) {
-        section.removeEventListener("mousemove", handleMouseMove);
-        section.removeEventListener("mouseenter", handleMouseEnter);
-        section.removeEventListener("mouseleave", handleMouseLeave);
-      }
-      // Clear timeout on cleanup
-      if (hideTimeoutRef.current) {
-        clearTimeout(hideTimeoutRef.current);
-      }
-    };
-  }, [cursorX, cursorY]);
-
+export default function Hero() {
   return (
     <section
-      ref={sectionRef}
-      className="relative flex min-h-[80vh] flex-col justify-center overflow-hidden py-20"
+      id="top"
+      className="relative overflow-hidden pb-16 pt-36 md:pb-24 md:pt-44"
     >
-      {/* Animated background orbs */}
-      <div className="pointer-events-none absolute inset-0 z-[15] overflow-visible">
-        <motion.div
-          className="absolute h-48 w-48 rounded-full bg-primary/20 blur-3xl md:h-96 md:w-96"
-          style={{ left: "10%", top: "10%" }}
-          initial={{ x: 0, y: 0, scale: 1 }}
-          animate={{
-            x: [0, 75, 40, 100, 25, 0],
-            y: [0, 50, 100, 75, 40, 0],
-            scale: [1, 1.3, 1.1, 1.2, 1.15, 1],
-          }}
-          transition={{
-            duration: 12,
-            repeat: Infinity,
-            repeatType: "loop",
-            ease: "easeInOut",
-          }}
-        />
-        <motion.div
-          className="absolute h-40 w-40 rounded-full bg-primary/20 blur-3xl md:h-80 md:w-80"
-          style={{ right: "5%", top: "70%" }}
-          initial={{ x: 0, y: 0, scale: 1 }}
-          animate={{
-            x: [0, -60, -100, -40, -75, 0],
-            y: [0, -40, -75, -100, -50, 0],
-            scale: [1, 1.2, 1.05, 1.15, 1.1, 1],
-          }}
-          transition={{
-            duration: 14,
-            repeat: Infinity,
-            repeatType: "loop",
-            ease: "easeInOut",
-            delay: 0.5,
-          }}
-        />
-        <motion.div
-          className="absolute hidden h-36 w-36 rounded-full bg-primary/20 blur-3xl md:block md:h-72 md:w-72"
-          style={{ left: "70%", top: "20%" }}
-          initial={{ x: 0, y: 0, scale: 1 }}
-          animate={{
-            x: [0, 50, 90, 30, 75, 0],
-            y: [0, -30, -60, -90, -45, 0],
-            scale: [1, 1.25, 1.05, 1.2, 1.1, 1],
-          }}
-          transition={{
-            duration: 16,
-            repeat: Infinity,
-            repeatType: "loop",
-            ease: "easeInOut",
-            delay: 1,
-          }}
-        />
-
-        {/* Mouse-following cursor glow */}
-        {isHovering && (
-          <motion.div
-            className="absolute h-40 w-40 rounded-full bg-primary/20 blur-3xl"
-            style={{
-              x: cursorX,
-              y: cursorY,
-              left: -80, // Half of width (160/2) to center it on cursor
-              top: -80, // Half of height (160/2) to center it on cursor
-            }}
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{
-              opacity: showCursorGlow ? 1 : 0,
-              scale: showCursorGlow ? 1 : 0,
-            }}
-            transition={{ duration: 0.4, ease: "easeInOut" }}
-          />
-        )}
+      {/* Backdrop */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+        <div className="bg-grid mask-radial absolute inset-0" />
+        <div className="absolute left-1/2 top-[-12rem] h-[36rem] w-[60rem] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,hsl(var(--brand-from)/0.18),transparent)] blur-2xl" />
+        <div className="absolute left-[60%] top-[-6rem] h-[24rem] w-[36rem] rounded-full bg-[radial-gradient(closest-side,hsl(var(--brand-to)/0.14),transparent)] blur-2xl" />
       </div>
-      <div className="container relative z-20 mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="max-w-3xl space-y-6"
-        >
-          <h2 className="text-xl font-medium text-primary drop-shadow-lg">
-            Hi, I&apos;m {profile.name}
-          </h2>
-          <h1 className="text-5xl font-bold leading-tight tracking-tighter drop-shadow-xl sm:text-7xl">
-            {profile.role}
-            <br />
-            <span className="text-muted-foreground">building for the web.</span>
-          </h1>
-          <p className="max-w-2xl text-xl text-muted-foreground drop-shadow-md">
-            {profile.bio}
-          </p>
 
-          <div className="flex flex-wrap gap-4 pt-4">
-            <Button asChild size="lg">
-              <Link href="#projects">
-                View Projects <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-            <div className="flex gap-2">
-              <Button variant="outline" size="icon" asChild>
-                <Link href={profile.socials.github} target="_blank">
-                  <Github className="h-5 w-5" />
-                  <span className="sr-only">GitHub</span>
+      <div className="container">
+        <motion.div
+          {...fadeUp(0)}
+          className="mb-8 inline-flex items-center gap-2.5 rounded-full border bg-background/60 py-1.5 pl-2 pr-4 text-sm text-muted-foreground backdrop-blur"
+        >
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand opacity-60 motion-reduce:animate-none" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-brand" />
+          </span>
+          <span>{profile.location}</span>
+          <span className="h-3 w-px bg-border" />
+          <LocalTime />
+        </motion.div>
+
+        <motion.p
+          {...fadeUp(0.08)}
+          className="mb-4 font-mono text-sm text-muted-foreground"
+        >
+          {profile.name} — {profile.role}
+        </motion.p>
+
+        <motion.h1
+          {...fadeUp(0.16)}
+          className="max-w-5xl text-balance text-5xl font-semibold leading-[1.02] tracking-tighter sm:text-6xl md:text-7xl lg:text-[5.25rem]"
+        >
+          Crafting fast, thoughtful <br className="hidden md:block" />
+          <span className="text-gradient">products for the web.</span>
+        </motion.h1>
+
+        <motion.p
+          {...fadeUp(0.24)}
+          className="mt-8 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground md:text-xl"
+        >
+          {profile.bio}
+        </motion.p>
+
+        <motion.div
+          {...fadeUp(0.32)}
+          className="mt-10 flex flex-wrap items-center gap-3"
+        >
+          <Button asChild size="lg" className="group h-12 rounded-full px-6">
+            <Link href="#projects">
+              View my work
+              <ArrowRight className="transition-transform group-hover:translate-x-0.5" />
+            </Link>
+          </Button>
+          <Button
+            asChild
+            size="lg"
+            variant="outline"
+            className="h-12 rounded-full bg-background/60 px-6 backdrop-blur"
+          >
+            <Link href="#contact">Get in touch</Link>
+          </Button>
+          <div className="ml-1 flex items-center gap-1">
+            {socials.map(({ href, label, icon: Icon }) => (
+              <Button
+                key={label}
+                asChild
+                variant="ghost"
+                size="icon"
+                className="h-11 w-11 rounded-full text-muted-foreground hover:text-foreground"
+              >
+                <Link
+                  href={href}
+                  target={href.startsWith("http") ? "_blank" : undefined}
+                  rel="noopener noreferrer"
+                >
+                  <Icon className="!size-5" />
+                  <span className="sr-only">{label}</span>
                 </Link>
               </Button>
-              <Button variant="outline" size="icon" asChild>
-                <Link href={profile.socials.linkedin} target="_blank">
-                  <Linkedin className="h-5 w-5" />
-                  <span className="sr-only">LinkedIn</span>
-                </Link>
-              </Button>
-              <Button variant="outline" size="icon" asChild>
-                <Link href={`mailto:${profile.email}`}>
-                  <Mail className="h-5 w-5" />
-                  <span className="sr-only">Email</span>
-                </Link>
-              </Button>
-            </div>
+            ))}
           </div>
         </motion.div>
+
+        <motion.dl
+          {...fadeUp(0.4)}
+          className="mt-16 grid grid-cols-1 divide-y rounded-2xl border bg-card/50 backdrop-blur sm:grid-cols-3 sm:divide-x sm:divide-y-0 md:mt-24"
+        >
+          {stats.map((stat) => (
+            <div key={stat.label} className="flex flex-col gap-1 p-6">
+              <dt className="order-2 text-sm text-muted-foreground">
+                {stat.label}
+              </dt>
+              <dd className="order-1 text-3xl font-semibold tracking-tight">
+                {stat.value}
+              </dd>
+            </div>
+          ))}
+        </motion.dl>
       </div>
+
+      {/* Tech marquee */}
+      <motion.div
+        {...fadeUp(0.5)}
+        className="mask-fade-x mt-16 overflow-hidden border-y py-5"
+        aria-label="Technologies I work with"
+      >
+        <div className="flex w-max animate-marquee gap-12 motion-reduce:animate-none">
+          {[...allSkills, ...allSkills].map((skill, i) => (
+            <span
+              key={i}
+              aria-hidden={i >= allSkills.length}
+              className="flex items-center gap-12 whitespace-nowrap font-mono text-sm uppercase tracking-widest text-muted-foreground"
+            >
+              {skill}
+              <span className="h-1 w-1 rounded-full bg-border" />
+            </span>
+          ))}
+        </div>
+      </motion.div>
     </section>
   );
 }

@@ -1,57 +1,64 @@
-"use client";
-
-import { motion } from "framer-motion";
 import { experience } from "@/lib/data";
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import { Reveal } from "./reveal";
+import { SectionHeading } from "./section-heading";
 
 export default function Experience() {
   return (
-    <section id="experience" className="py-20">
-      <div className="container mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-        >
-          <h2 className="mb-12 text-3xl font-bold tracking-tighter sm:text-4xl">Professional Experience</h2>
-          
-          <div className="space-y-8">
-            {experience.map((job, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
-                <Card>
-                  <CardHeader>
-                    <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
-                      <div>
-                        <CardTitle className="text-xl">{job.role}</CardTitle>
-                        <p className="text-lg font-medium text-muted-foreground">{job.company}</p>
-                      </div>
-                      <span className="rounded-full bg-secondary px-3 py-1 text-sm font-medium">
-                        {job.period}
+    <section id="experience" className="border-t bg-muted/30 py-24 md:py-32">
+      <div className="container">
+        <SectionHeading
+          index="02"
+          label="Experience"
+          title="Where I've worked"
+          description="Product teams across document automation, fintech and education."
+        />
+
+        <ol className="border-t">
+          {experience.map((job, index) => {
+            const current = job.period.includes("Present");
+            return (
+              <li key={job.company} className="border-b">
+                <Reveal
+                  delay={index * 0.05}
+                  className="grid gap-4 py-10 md:grid-cols-12 md:gap-8"
+                >
+                  <div className="md:col-span-3">
+                    <p className="font-mono text-sm text-muted-foreground">
+                      {job.period}
+                    </p>
+                    {current && (
+                      <span className="mt-3 inline-flex items-center gap-2 rounded-full border border-brand/30 bg-brand/10 px-2.5 py-0.5 text-xs font-medium text-brand">
+                        <span className="h-1.5 w-1.5 rounded-full bg-brand" />
+                        Current
                       </span>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="mb-4 text-muted-foreground">{job.description}</p>
-                    <ul className="list-inside list-disc space-y-2 text-sm">
-                      {job.achievements.map((achievement, i) => (
-                        <li key={i}>{achievement}</li>
+                    )}
+                  </div>
+                  <div className="md:col-span-9">
+                    <h3 className="text-2xl font-semibold tracking-tight">
+                      {job.company}
+                    </h3>
+                    <p className="mt-1 text-muted-foreground">{job.role}</p>
+                    <p className="mt-4 max-w-2xl leading-relaxed">
+                      {job.description}
+                    </p>
+                    <ul className="mt-5 space-y-2.5">
+                      {job.achievements.map((achievement) => (
+                        <li
+                          key={achievement}
+                          className="flex gap-3 text-muted-foreground"
+                        >
+                          <span className="mt-2.5 h-1 w-3 shrink-0 rounded-full bg-brand/70" />
+                          <span className="leading-relaxed">{achievement}</span>
+                        </li>
                       ))}
                     </ul>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+                  </div>
+                </Reveal>
+              </li>
+            );
+          })}
+        </ol>
       </div>
     </section>
   );
 }
-

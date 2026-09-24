@@ -43,6 +43,13 @@ export const profile = {
   },
 };
 
+export const navLinks = [
+  { name: "Work", href: "#projects" },
+  { name: "Experience", href: "#experience" },
+  { name: "Skills", href: "#skills" },
+  { name: "Testimonials", href: "#testimonials" },
+];
+
 export const skills: SkillCategory[] = [
   {
     category: "Frontend",
